@@ -1,0 +1,1148 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="REACH-CARE: Remote Evaluation and Accessible Clinic Healthcare Information System">
+    <title>REACH-CARE | Community Healthcare</title>
+
+    <style>
+        :root {
+            --primary: #087f8c;
+            --primary-dark: #075b66;
+            --secondary: #e8f7f5;
+            --accent: #21a67a;
+            --text: #243746;
+            --muted: #687985;
+            --white: #ffffff;
+            --background: #f5f9fb;
+            --border: #e0e9ed;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button, input, select, textarea {
+            font: inherit;
+        }
+
+        button, .btn {
+            cursor: pointer;
+        }
+
+        .container {
+            width: min(1120px, 92%);
+            margin: auto;
+        }
+
+        /* Navigation */
+        header {
+            background: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-dark);
+            font-weight: 800;
+            font-size: 24px;
+        }
+
+        .logo-icon {
+            display: grid;
+            place-items: center;
+            width: 43px;
+            height: 43px;
+            background: var(--primary);
+            color: white;
+            border-radius: 13px;
+            font-size: 26px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 23px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .menu-toggle {
+            display: none;
+            border: 0;
+            background: transparent;
+            color: var(--primary-dark);
+            font-size: 28px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 9px;
+            background: var(--primary);
+            color: white;
+            border: 1px solid var(--primary);
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--primary-dark);
+        }
+
+        .btn-outline:hover {
+            color: white;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 90px 0;
+            background: linear-gradient(120deg, #e5f6f5, #f5f9fb 65%);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 55px;
+            align-items: center;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            color: var(--primary-dark);
+            background: #d5efed;
+            padding: 7px 13px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: clamp(36px, 5vw, 57px);
+            line-height: 1.12;
+            margin-bottom: 22px;
+            letter-spacing: -1.5px;
+        }
+
+        h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            color: var(--muted);
+            font-size: 17px;
+            max-width: 600px;
+            margin-bottom: 28px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .hero-art {
+            min-height: 350px;
+            display: grid;
+            place-items: center;
+            position: relative;
+            border-radius: 28px;
+            background: linear-gradient(145deg, #c9eeea, #e8f7f5);
+            overflow: hidden;
+        }
+
+        .medical-card {
+            width: min(310px, 85%);
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 18px 50px #075b661b;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .medical-symbol {
+            font-size: 76px;
+            line-height: 1.3;
+        }
+
+        .medical-card h3 {
+            color: var(--primary-dark);
+            font-size: 23px;
+            margin: 10px 0;
+        }
+
+        .medical-card p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .floating-label {
+            position: absolute;
+            padding: 12px 15px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 8px 24px #075b6614;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .float-one {
+            top: 28px;
+            left: 20px;
+        }
+
+        .float-two {
+            right: 15px;
+            bottom: 28px;
+        }
+
+        /* General sections */
+        section {
+            padding: 75px 0;
+            scroll-margin-top: 75px;
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 720px;
+            margin: 0 auto 42px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(27px, 4vw, 36px);
+            line-height: 1.25;
+            margin-bottom: 13px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .card {
+            padding: 27px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            background: white;
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px #163e4d0c;
+        }
+
+        .card-icon {
+            display: grid;
+            place-items: center;
+            width: 54px;
+            height: 54px;
+            background: var(--secondary);
+            border-radius: 14px;
+            font-size: 27px;
+            margin-bottom: 18px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            font-size: 19px;
+        }
+
+        .card p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* Purpose */
+        .purpose-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .purpose-box {
+            padding: 32px;
+            border-radius: 18px;
+            background: white;
+            border: 1px solid var(--border);
+        }
+
+        .purpose-box h3 {
+            margin-bottom: 12px;
+            color: var(--primary-dark);
+        }
+
+        .purpose-box p {
+            color: var(--muted);
+        }
+
+        /* Consultation */
+        .consultation {
+            background: #eaf6f5;
+        }
+
+        .consult-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 45px;
+            align-items: start;
+        }
+
+        .consult-info h2 {
+            font-size: 35px;
+            line-height: 1.2;
+            margin: 15px 0;
+        }
+
+        .consult-info p {
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        .check-list {
+            list-style: none;
+        }
+
+        .check-list li {
+            margin: 13px 0;
+            font-weight: 600;
+        }
+
+        .consult-form {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 10px 35px #075b660b;
+        }
+
+        .consult-form h3 {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d6e2e7;
+            border-radius: 8px;
+            outline: none;
+            background: white;
+            color: var(--text);
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px #087f8c18;
+        }
+
+        .field textarea {
+            resize: vertical;
+            min-height: 95px;
+        }
+
+        .form-note {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 12px;
+        }
+
+        /* Stakeholders */
+        .stakeholder-list {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+
+        .stakeholder {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 15px;
+            text-align: center;
+        }
+
+        .stakeholder .card-icon {
+            margin: 0 auto 13px;
+        }
+
+        .stakeholder h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .stakeholder p {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* Requirements */
+        .requirements {
+            background: white;
+        }
+
+        .priority-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .priority {
+            padding: 25px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+        }
+
+        .priority h3 {
+            margin-bottom: 15px;
+        }
+
+        .priority ul {
+            padding-left: 20px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .priority li {
+            margin: 9px 0;
+        }
+
+        .priority.must {
+            border-top: 4px solid #15966b;
+        }
+
+        .priority.should {
+            border-top: 4px solid #d99a25;
+        }
+
+        .priority.optional {
+            border-top: 4px solid #8796a2;
+        }
+
+        /* Security banner */
+        .security-banner {
+            padding: 30px;
+            background: var(--primary-dark);
+            color: white;
+            border-radius: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .security-banner p {
+            color: #d3e9eb;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .security-banner .card-icon {
+            flex-shrink: 0;
+            background: #ffffff20;
+        }
+
+        /* Footer */
+        footer {
+            background: #103b45;
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+            padding-bottom: 25px;
+        }
+
+        footer p {
+            color: #c5d9dc;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            font-size: 13px;
+        }
+
+        .copyright {
+            border-top: 1px solid #ffffff25;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .notice {
+            display: none;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background: #e5f7ee;
+            color: #126a47;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .hero-grid,
+            .consult-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-art {
+                min-height: 320px;
+            }
+
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stakeholder-list {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            nav {
+                min-height: 68px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 68px;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 20px 5%;
+                flex-direction: column;
+                align-items: stretch;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 8px 0;
+                font-size: 14px;
+            }
+
+            .hero {
+                padding: 55px 0;
+            }
+
+            section {
+                padding: 55px 0;
+            }
+
+            .grid,
+            .purpose-grid,
+            .priority-list,
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .stakeholder-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .security-banner {
+                align-items: flex-start;
+            }
+
+            .consult-form {
+                padding: 22px;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <nav class="container">
+            <a href="#home" class="logo" aria-label="REACH-CARE home">
+                <span class="logo-icon">✚</span>
+                <span>REACH-CARE</span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle"
+                    aria-label="Toggle navigation"
+                    aria-expanded="false">☰</button>
+
+            <div class="nav-links" id="navLinks">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#stakeholders">Users</a>
+                <a href="#requirements">Requirements</a>
+                <a href="#consultation" class="btn">Request Consultation</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="hero" id="home">
+            <div class="container hero-grid">
+                <div>
+                    <span class="eyebrow">Healthcare within your reach</span>
+                    <h1>Quality Healthcare, <span>Closer to Home.</span></h1>
+                    <p>
+                        REACH-CARE connects remote barangay communities with
+                        municipal healthcare professionals through online
+                        consultations and accessible digital patient records.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#consultation" class="btn">Request a Consultation</a>
+                        <a href="#about" class="btn btn-outline">Learn More</a>
+                    </div>
+                </div>
+
+                <div class="hero-art">
+                    <div class="floating-label float-one">🩺 Digital Healthcare</div>
+
+                    <div class="medical-card">
+                        <div class="medical-symbol">🏥</div>
+                        <h3>Care Without Distance</h3>
+                        <p>
+                            Connecting patients, barangay health workers,
+                            nurses, and municipal doctors.
+                        </p>
+                    </div>
+
+                    <div class="floating-label float-two">💚 Community First</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT / PURPOSE -->
+        <section id="about">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">About the System</span>
+                    <h2>What is REACH-CARE?</h2>
+                    <p>
+                        Remote Evaluation and Accessible Clinic Healthcare
+                        Information System is a proposed digital healthcare
+                        platform designed to improve healthcare access in
+                        remote communities.
+                    </p>
+                </div>
+
+                <div class="purpose-grid">
+                    <div class="purpose-box">
+                        <h3>🎯 Our Purpose</h3>
+                        <p>
+                            To make basic healthcare consultations more
+                            accessible to residents in far-flung barangays
+                            by connecting them with municipal doctors and
+                            supporting local health workers with digital tools.
+                        </p>
+                    </div>
+
+                    <div class="purpose-box">
+                        <h3>💡 The Problem We Solve</h3>
+                        <p>
+                            Long travel distances, expensive transportation,
+                            paper-based medical records, and delayed access
+                            to patient information can make healthcare
+                            difficult. REACH-CARE aims to reduce these
+                            barriers through teleconsultation and electronic
+                            medical records.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES -->
+        <section id="services">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">System Features</span>
+                    <h2>Healthcare Services and Features</h2>
+                    <p>
+                        Practical digital tools to support patients and
+                        healthcare workers in local communities.
+                    </p>
+                </div>
+
+                <div class="grid">
+                    <article class="card">
+                        <div class="card-icon">💻</div>
+                        <h3>Online Consultations</h3>
+                        <p>
+                            Enable patients at community health centers to
+                            consult municipal doctors through video calls
+                            or chat, when available.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">📋</div>
+                        <h3>Digital Patient Records</h3>
+                        <p>
+                            Maintain organized electronic medical records,
+                            including patient information, symptoms,
+                            medical history, and clinical notes.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">💊</div>
+                        <h3>Digital Prescriptions</h3>
+                        <p>
+                            Support authorized doctors in preparing
+                            electronic prescriptions according to
+                            applicable clinical and legal requirements.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">🚑</div>
+                        <h3>Hospital Referrals</h3>
+                        <p>
+                            Help healthcare professionals prepare referral
+                            notes when patients need further assessment
+                            or hospital treatment.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">📊</div>
+                        <h3>Health Dashboard</h3>
+                        <p>
+                            Provide authorized health officials with
+                            daily and monthly reports to monitor community
+                            health trends.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">🔐</div>
+                        <h3>Secure Access</h3>
+                        <p>
+                            Organize user accounts and permissions so
+                            patients, health workers, doctors, and
+                            administrators have appropriate access.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONSULTATION FORM -->
+        <section class="consultation" id="consultation">
+            <div class="container consult-grid">
+                <div class="consult-info">
+                    <span class="eyebrow">Patient Access</span>
+                    <h2>Start Your Healthcare Journey</h2>
+                    <p>
+                        Request assistance from your local Barangay Health
+                        Worker or Rural Health Unit. A healthcare worker
+                        can help coordinate a consultation with an
+                        authorized municipal doctor.
+                    </p>
+
+                    <ul class="check-list">
+                        <li>✓ Convenient access to healthcare assistance</li>
+                        <li>✓ Support from local health workers</li>
+                        <li>✓ Potentially fewer unnecessary trips</li>
+                        <li>✓ Better organized patient information</li>
+                    </ul>
+
+                    <p>
+                        <strong>Important:</strong> This demonstration form
+                        does not contact a doctor or book an actual
+                        appointment.
+                    </p>
+                </div>
+
+                <form class="consult-form" id="consultForm">
+                    <h3>Consultation Request Demo</h3>
+
+                    <div class="notice" id="formNotice" role="status">
+                        Demo submitted. No information was sent or saved.
+                    </div>
+
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="patientName">Patient Name</label>
+                            <input type="text" id="patientName"
+                                   placeholder="Enter full name" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="age">Age</label>
+                            <input type="number" id="age"
+                                   min="0" max="120"
+                                   placeholder="Age" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="barangay">Barangay / Community</label>
+                        <input type="text" id="barangay"
+                               placeholder="Enter barangay name" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="service">Requested Service</label>
+                        <select id="service" required>
+                            <option value="">Select a service</option>
+                            <option>General Consultation</option>
+                            <option>Follow-up Consultation</option>
+                            <option>Medical Record Assistance</option>
+                            <option>Referral Assistance</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="message">Reason for Request</label>
+                        <textarea id="message"
+                                  placeholder="Briefly describe the assistance needed"
+                                  required></textarea>
+                    </div>
+
+                    <button class="btn" type="submit" style="width:100%">
+                        Submit Demo Request
+                    </button>
+
+                    <p class="form-note">
+                        Prototype only. Do not enter sensitive medical
+                        information into this demonstration form.
+                    </p>
+                </form>
+            </div>
+        </section>
+
+        <!-- STAKEHOLDERS -->
+        <section id="stakeholders">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">Who Uses the System?</span>
+                    <h2>Our Stakeholders</h2>
+                    <p>
+                        REACH-CARE supports the people responsible for
+                        delivering, receiving, and managing community
+                        healthcare services.
+                    </p>
+                </div>
+
+                <div class="stakeholder-list">
+                    <article class="stakeholder">
+                        <div class="card-icon">🧑</div>
+                        <h3>Patients</h3>
+                        <p>Residents of remote communities who need healthcare assistance.</p>
+                    </article>
+
+                    <article class="stakeholder">
+                        <div class="card-icon">🩺</div>
+                        <h3>BHWs and Nurses</h3>
+                        <p>Local health workers who assist patients and maintain records.</p>
+                    </article>
+
+                    <article class="stakeholder">
+                        <div class="card-icon">👨‍⚕️</div>
+                        <h3>Municipal Doctors</h3>
+                        <p>Medical professionals who assess patients and provide advice.</p>
+                    </article>
+
+                    <article class="stakeholder">
+                        <div class="card-icon">🖥️</div>
+                        <h3>Administrators</h3>
+                        <p>Authorized staff who manage accounts, access, and technical support.</p>
+                    </article>
+
+                    <article class="stakeholder">
+                        <div class="card-icon">🏛️</div>
+                        <h3>Local Government</h3>
+                        <p>Municipal leaders who oversee funding and health programs.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- REQUIREMENTS -->
+        <section class="requirements" id="requirements">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">Project Requirements</span>
+                    <h2>Prioritized System Requirements</h2>
+                    <p>
+                        The system is designed around essential healthcare
+                        functions first, with additional features introduced
+                        as resources permit.
+                    </p>
+                </div>
+
+                <div class="priority-list">
+                    <div class="priority must">
+                        <h3>🟢 Must-Have</h3>
+                        <ul>
+                            <li>Secure user login</li>
+                            <li>Electronic medical records</li>
+                            <li>Online chat and video consultations</li>
+                            <li>Role-based access permissions</li>
+                        </ul>
+                    </div>
+
+                    <div class="priority should">
+                        <h3>🟡 Should-Have</h3>
+                        <ul>
+                            <li>Electronic prescriptions</li>
+                            <li>Hospital referral management</li>
+                            <li>Monthly health reports</li>
+                            <li>Health statistics dashboard</li>
+                        </ul>
+                    </div>
+
+                    <div class="priority optional">
+                        <h3>⚪ Optional</h3>
+                        <ul>
+                            <li>SMS appointment reminders</li>
+                            <li>Additional notification features</li>
+                            <li>Enhanced reporting tools</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OPERATING REQUIREMENTS -->
+        <section id="operations">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">System Operations</span>
+                    <h2>What the System Needs</h2>
+                    <p>
+                        Affordable technology and practical operating
+                        procedures help make the system suitable for
+                        remote communities.
+                    </p>
+                </div>
+
+                <div class="grid">
+                    <article class="card">
+                        <div class="card-icon">💻</div>
+                        <h3>Hardware</h3>
+                        <p>
+                            Desktop computers, laptops, tablets, or
+                            smartphones available at barangay health
+                            stations and municipal offices.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">🌐</div>
+                        <h3>Software and Network</h3>
+                        <p>
+                            A modern web browser, a secure application
+                            server, a database, and internet or mobile
+                            data for online services.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">🔄</div>
+                        <h3>Backups and Training</h3>
+                        <p>
+                            Tested backup and recovery procedures,
+                            security training, and simple instructions
+                            for healthcare workers assisting residents.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECURITY -->
+        <section>
+            <div class="container">
+                <div class="security-banner">
+                    <div>
+                        <h2>Privacy, Security, and Trust</h2>
+                        <p>
+                            A production system must protect patient
+                            confidentiality through appropriate
+                            permissions, secure data transmission,
+                            reliable backups, and compliance with
+                            applicable Philippine data privacy and
+                            healthcare requirements.
+                        </p>
+                    </div>
+                    <div class="card-icon">🔒</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="#home" class="logo" style="color:white">
+                        <span class="logo-icon">✚</span>
+                        <span>REACH-CARE</span>
+                    </a>
+                    <p>
+                        Remote Evaluation and Accessible Clinic
+                        Healthcare Information System
+                    </p>
+                    <p>Bringing community healthcare closer to home.</p>
+                </div>
+
+                <div>
+                    <h3>Quick Links</h3>
+                    <div class="footer-links" style="margin-top:12px">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#stakeholders">Stakeholders</a>
+                        <a href="#requirements">Requirements</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                &copy; <span id="year"></span> REACH-CARE.
+                Healthcare access for every community.
+                <p>Academic / System Prototype</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", function () {
+            const isOpen = navLinks.classList.toggle("active");
+            menuToggle.setAttribute("aria-expanded", isOpen);
+            menuToggle.textContent = isOpen ? "✕" : "☰";
+        });
+
+        // Close mobile menu after selecting a link
+        document.querySelectorAll(".nav-links a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                navLinks.classList.remove("active");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.textContent = "☰";
+            });
+        });
+
+        // Demo form: validates fields but does not transmit or save data
+        document.getElementById("consultForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const notice = document.getElementById("formNotice");
+            notice.style.display = "block";
+            notice.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+            this.reset();
+        });
+
+        // Current year
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
+</body>
+</html>
